@@ -165,7 +165,7 @@ def test_mark(vim):
 def test_invalid_utf8_py2(vim):
     vim.command('1s/^/\\=printf("%c", 0xff)/')
     assert vim.eval("char2nr(getline(1))") == 0xFF
-    assert vim.current.buffer[:] == ['\xff']
+    assert map(lambda s: s.decode('utf-8'), vim.current.buffer[:]) == ['\xff']
 
     vim.current.line += 'x'
     assert vim.eval("getline(1)", decode=False) == '\xffx'
