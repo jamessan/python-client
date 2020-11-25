@@ -1,6 +1,7 @@
 Pynvim: Python client to [Neovim](https://github.com/neovim/neovim)
 ===================================================================
 
+[![GitHub CI](https://github.com/neovim/pynvim/workflows/CI/badge.svg)](https://github.com/neovim/pynvim/actions/?query=workflow:CI)
 [![Build Status](https://travis-ci.org/neovim/pynvim.svg?branch=master)](https://travis-ci.org/neovim/pynvim)
 [![Documentation Status](https://readthedocs.org/projects/pynvim/badge/?version=latest)](http://pynvim.readthedocs.io/en/latest/?badge=latest)
 [![Code coverage](https://codecov.io/gh/neovim/pynvim/branch/master/graph/badge.svg)](https://codecov.io/gh/neovim/pynvim)
