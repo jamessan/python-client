@@ -161,22 +161,26 @@ def test_mark(vim):
     assert vim.current.buffer.mark('V') == [3, 0]
 
 
-def test_invalid_utf8(vim):
-    vim.command('normal "=printf("%c", 0xFF)\np')
+@pytest.mark.skipif('IS_PYTHON3')
+def test_invalid_utf8_py2(vim):
+    vim.command('1s/^/\\=printf("%c", 0xff)/')
     assert vim.eval("char2nr(getline(1))") == 0xFF
-
-    if IS_PYTHON3:
-        assert vim.current.buffer[:] == ['\udcff']
-    else:
-        assert vim.current.buffer[:] == ['\xff']
+    assert vim.current.buffer[:] == ['\xff']
 
     vim.current.line += 'x'
-    if IS_PYTHON3:
-        assert vim.eval("getline(1)", decode=False) == '\udcffx'
-        assert vim.current.buffer[:] == ['\udcffx']
-    else:
-        assert vim.eval("getline(1)", decode=False) == '\xffx'
-        assert vim.current.buffer[:] == ['\xffx']
+    assert vim.eval("getline(1)", decode=False) == '\xffx'
+    assert vim.current.buffer[:] == ['\xffx']
+
+
+@pytest.mark.skipif('not IS_PYTHON3')
+def test_invalid_utf8_py3(vim):
+    vim.command('1s/^/\\=printf("%c", 0xff)/')
+    assert vim.eval("char2nr(getline(1))") == 0xFF
+    assert vim.current.buffer[:] == ['\udcff']
+
+    vim.current.line += 'x'
+    assert vim.eval("getline(1)", decode=False) == '\udcffx'
+    assert vim.current.buffer[:] == ['\udcffx']
 
 
 def test_get_exceptions(vim):
